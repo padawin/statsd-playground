@@ -32,6 +32,7 @@ class Calc(object):
             try:
                 res = self.div(members[0], members[1])
             except ZeroDivisionError:
+                self.stats_client.incr('operation.error.division_by_0')
                 return (False, Calc.INVALID_DIVISION_BY_ZERO)
 
         if res is None:
