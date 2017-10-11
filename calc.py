@@ -6,8 +6,8 @@ class Calc(object):
     INVALID_NUMBER_MEMBERS = 3
     INVALID_DIVISION_BY_ZERO = 4
 
-    def __init__(self, stats_client):
-        self.stats_client = stats_client
+    def __init__(self, stats_client=None):
+        self.stats_client = stats_client or 'localhost'
 
     def do_operation(self, operation):
         self.stats_client.incr('operation')
