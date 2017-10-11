@@ -1,7 +1,4 @@
-#!/usr/bin/env python
-import sys
 from functools import reduce
-import statsd
 
 class Calc(object):
     INVALID_OPERATOR = 1
@@ -58,22 +55,3 @@ class Calc(object):
     def div(self, member1, member2):
         self.stats_client.incr('operation.div')
         return member1 / member2
-
-if __name__ == '__main__':
-    stats_client = statsd.StatsClient(sys.argv[1], 8125)
-    c = Calc(stats_client)
-    res = c.do_operation(sys.argv[2:])
-    if res[0]:
-        print(res[1])
-    elif res[1] == Calc.INVALID_NUMBER_MEMBERS:
-        print("Usage:")
-        print(" + member1 member2 ... membern")
-        print(" - member1 member2 ... membern")
-        print(" x member1 member2 ... membern")
-        print(" / member1 member2")
-    elif res[1] == Calc.INVALID_OPERATOR:
-        print("Invalid operator {}".format(sys.argv[1]))
-    elif res[1] == Calc.INVALID_TYPE_MEMBER:
-        print("All members must be integers")
-    elif res[1] == Calc.INVALID_DIVISION_BY_ZERO:
-        print("Division by zero is not valid in this universe")
