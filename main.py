@@ -4,9 +4,9 @@ import statsd
 import sys
 
 if __name__ == '__main__':
-    stats_client = statsd.StatsClient(sys.argv[1], 8125)
+    stats_client = statsd.StatsClient('localhost', 8125)
     c = calc.Calc(stats_client)
-    res = c.do_operation(sys.argv[2:])
+    res = c.do_operation(sys.argv[1:])
     if res[0]:
         print(res[1])
     elif res[1] == Calc.INVALID_NUMBER_MEMBERS:
